@@ -10,6 +10,7 @@ on:
 jobs:
   rotate:
     runs-on: ubuntu-latest
+    environment: Production
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -18,5 +19,5 @@ jobs:
     - name: Run script
       env:
         BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
-        API_URL: ${{ env.NEXT_PUBLIC_BASE_URL }}
+        API_URL: ${{ vars.NEXT_PUBLIC_BASE_URL }}
       run: ./scripts/rotate-slideshow.sh
