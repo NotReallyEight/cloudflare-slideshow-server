@@ -24,13 +24,15 @@ const handler = async (request: NextRequest) => {
 
     return Response.json({
       status: 200,
-      files: files.Contents?.map((file) => ({
-        key: file.Key ?? "",
-        publicUrl: new URL(
-          file.Key ?? "",
-          process.env.PUBLIC_CDN_URL ?? ""
-        ).toString(),
-      })),
+      files: files.Contents?.filter((file) => !file.Key?.includes(".low.")).map(
+        (filteredFile) => ({
+          key: filteredFile.Key ?? "",
+          publicUrl: new URL(
+            filteredFile.Key ?? "",
+            process.env.PUBLIC_CDN_URL ?? ""
+          ).toString(),
+        })
+      ),
     });
   } catch (err: unknown) {
     return Response.json({
