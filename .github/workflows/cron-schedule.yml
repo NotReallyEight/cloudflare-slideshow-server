@@ -1,0 +1,20 @@
+name: Rotate folder
+
+on:
+  schedule:
+  - cron: '* * * * *' # Every minute (for testing purposes)
+  # - cron: '0 9 * * *' # Every day at 9 AM UTC
+
+jobs:
+  rotate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Make script executable
+      run: chmod +x ./scripts/rotate-slideshow.sh
+    - name: Run script
+      env:
+        BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+        API_URL: ${{ env.NEXT_PUBLIC_BASE_URL }}
+      run: ./scripts/rotate-slideshow.sh
