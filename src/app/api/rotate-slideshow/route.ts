@@ -48,7 +48,10 @@ const handler = async () => {
         `Pictures/${currentSlideShow.source}/${currentSlideShow.active_year}/${currentSlideShow.active_month}/`
       ) + 1;
 
-    const [, source, year, month] = folders[updatedFolderIndex].split("/");
+    const [, source, year, month] =
+      updatedFolderIndex >= folders.length
+        ? folders[0].split("/")
+        : folders[updatedFolderIndex].split("/");
 
     const updatedControl = await supabase
       .from("slideshow_control")
