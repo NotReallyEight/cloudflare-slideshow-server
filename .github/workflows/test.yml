@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: "npm ci"
+      - name: "Install dependencies"
+        run: "npm ci"
       # TODO: add prettier
-      - run: "npm run lint && npm run typecheck && npm run build"
+      - name: "Test"
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        run: "npm run lint && npm run typecheck && npm run build"
